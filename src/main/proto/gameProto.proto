@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+option java_package = "org.example.proto";
+option java_outer_classname = "GameProto";
+
+message PlayerReady{
+  string name = 1;
+}
+
+message ServerMessage{
+  oneof message{
+    GameStart gameStart = 1;
+    GameState gameState = 2;
+    Bullet bullet = 3;
+    RoundOver roundOver = 4;
+    Hit hit = 5;
+  }
+
+}
+
+message GameStart{
+  string gameId = 1;
+  Player you = 2;
+  Player opponent = 3;
+  repeated int32 map = 4;
+}
+
+message GameState{
+  string gameId = 1;
+  Player you = 2;
+  Player opponent = 3;
+  repeated Bullet bullets=4;
+
+}
+message Bullet{
+  double x = 1;
+  double y = 2;
+  double direction = 3;
+  double speed = 4;
+}
+
+message Player{
+  string playerId = 1;
+  string name = 2;
+  double x = 3;
+  double y = 4;
+  double direction = 5;
+  int32 score = 6;
+}
+message PlayerAction {
+  oneof action {
+    MoveForward forward = 1;
+    MoveBackward backward = 2;
+    RotateRight rotateRight = 3;
+    RotateLeft rotateLeft = 4;
+    Shoot shoot = 5;
+  }
+}
+
+message MoveForward{
+  string playerId =1;
+}
+
+message MoveBackward{
+  string playerId =1;
+}
+
+message RotateRight{
+  string playerId = 1;
+}
+
+message RotateLeft{
+  string playerId = 1;
+}
+
+message Shoot{
+  string playerId =1;
+}
+
+
+message RoundOver{
+  Player winner = 1;
+}
+
+message Hit{
+  double x = 1;
+  double y = 2;
+}
